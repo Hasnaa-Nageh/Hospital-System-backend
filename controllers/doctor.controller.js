@@ -20,7 +20,6 @@ const addDoctor = async (req, res, next) => {
       image,
     } = req.body;
 
-    // ✅ تأكد إن availableDays و availableTimes Arrays
     if (typeof availableDays === "string") {
       try {
         availableDays = JSON.parse(availableDays);

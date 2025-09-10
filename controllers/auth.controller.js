@@ -23,15 +23,13 @@ const signup = async (req, res, next) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    // 💡 تجاهل الـ role من الـ body واجعلها دايمًا patient
     const newUser = await User.create({
       fullname,
       email: normalizedEmail,
       password,
-      role: "patient", // 👈 إجباري patient
+      role: "patient", 
     });
 
-    // إنشاء patient profile مرتبط بالـ user الجديد
     const newPatient = await Patient.create({
       user: newUser._id,
       fullname,
@@ -43,7 +41,6 @@ const signup = async (req, res, next) => {
     newUser.patientProfile = newPatient._id;
     await newUser.save();
 
-    // إنشاء التوكينات
     const accessToken = generateAccessToken(newUser);
     const refreshToken = generateRefreshToken(newUser);
 
